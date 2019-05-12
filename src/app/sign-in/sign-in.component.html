@@ -1,0 +1,25 @@
+<form (ngSubmit)="signin()" ngNativeValidate class="text-center">
+    <br>
+    <div class="form-group row field-label col-md-4 mx-auto">
+        
+        <H1>SING IN HOSPITAL</H1>
+    </div>
+    <div class="row field-label col-md-4 mx-auto" style="margin-top:30px;">
+
+        <input type="text" class="form-control" [(ngModel)]="credentials.email" required name="email" placeholder="User email">
+
+    </div>
+    <div style="height: 20px;"></div>
+
+    <div class="row field-label col-md-4 mx-auto">
+        <input type="password" class="form-control" [(ngModel)]="credentials.password" required name="password"
+            placeholder="Password">
+    </div>
+    <span class="text-error">{{errorMessage}}</span>
+    <div style="height: 30px;"></div>
+    <div>
+        <input type="submit" class="w3-btn w3-grey w3-border w3-border-green w3-text-white w3-round-xlarge"
+        style="text-shadow:1px 1px 0 #444" value="LOGIN">
+    </div>
+
+</form>

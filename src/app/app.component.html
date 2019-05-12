@@ -1,0 +1,65 @@
+<section style="background: #ffffff; ;">
+	<nav class="navbar navbar-expand-sm circle ">
+		<a class="navbar-brand" style="color: white ; ">| PUBLIC |</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/inquire']"> Inquire 
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/save']"> Save 
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/create']"> Create 
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>
+
+			</ul>
+		</div>
+
+		<a class="navbar-brand" style="color: white ; ">| PROXY |</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/proxyinquire']"> Inquire 
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" [routerLink]="['/proxycreate']"> Create 
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>
+
+			</ul>
+		</div>
+		<div><input type="image" (click)="logout()" src="assets/images/btn_logout.png" /></div>
+
+	</nav>
+
+	<div>
+		<router-outlet></router-outlet>
+	</div>
+</section>
+
+<!-- 
+fill
+stroke
+circle
+shift 
+-->

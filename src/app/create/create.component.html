@@ -1,0 +1,457 @@
+<div class="container">
+
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  <div class="form-group row">
+    <H1>CREATE CCR DOCUMENT</H1>
+  </div>
+  <div class="form-group row">
+    <B>Search CCR Document Form Medical Record</B>
+
+  </div>
+  <div class="row">
+    <div class="field-label col-md-3 mx-auto">
+      <label for="citizenID" class="text-muted">Citizen ID</label>
+      <input type="text" class="form-control border-bottom" [(ngModel)]="patient.citizenID" id="citizenID" name="citizenID" pattern="^([1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$" maxlength=13>
+    </div>
+    <div class="field-label col-md-3 mx-auto">
+      <label for="receiptNo" class="text-muted">Receipt No</label>
+      <input type="text" class="form-control border-bottom" [(ngModel)]="receipt.receiptNo" id="receiptNo" name="receiptNo">
+    </div>
+  </div>
+  <div class="row">
+    <div class="center">
+      <button type="Fine" class="w3-btn w3-grey w3-border w3-border-green w3-text-white w3-round-xlarge" style="text-shadow:1px 1px 0 #444"
+        (click)="FineCcrDocInLocal()">Search</button>
+    </div>
+
+  </div>
+
+  <hr>
+  <form (ngSubmit)="onSubmit()" ngNativeValidate id='inputfield' style='display:none;'>
+
+    <div class="form-group row">
+      <B>Patient Profile</B>
+    </div>
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="citizenID" class="text-muted">Citizen ID<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="patient.citizenID" id="citizenID"
+          name="citizenID" pattern="^([1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="patientType" class="text-muted">Patient Type<span class="required-field">*</span></label>
+        <div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="INPATIENT DEPARTMENT" [(ngModel)]="patient.patientType" checked="checked" name="patientType">
+              IPD</label>
+          </div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="OUTPATIENT DEPARTMENT" [(ngModel)]="patient.patientType" name="patientType">
+              OPD</label>
+          </div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="EMERGENCY ROOM" [(ngModel)]="patient.patientType" name="patientType">
+              ER</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="patientID" class="text-muted">Patient ID<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="patient.patientID" id="patientID"
+          name="patientID">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="email" class="text-muted">E-mail<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="patient.email" id="email" name="email">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group row">
+      <B>Physician Profile</B>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-6 mx-auto">
+        <label for="medicalSpecialty" class="text-muted">MedicalSpecialty<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="physician.medicalSpecialty" id="medicalSpecialty"
+          name="medicalSpecialty">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group row">
+      <B>Physician Report</B>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mx-auto">
+        <div class="row">
+          <div class="field-label col-md-8 mx-auto">
+            <label for="admissionDate" class="text-muted">Admission Date<span class="required-field">*</span></label>
+            <input type="date" class="form-control border-bottom text-center" required [(ngModel)]="AdmissionDate" id="admissionDate"
+              name="admissionDate">
+          </div>
+        </div>
+        <div class="row">
+          <div class="field-label col-md-8 mx-auto">
+            <label for="dischageDate" class="text-muted">Dischage Date<span class="required-field">*</span></label>
+            <input type="date" class="form-control border-bottom text-center" required [(ngModel)]="DischageDate" id="dischageDate"
+              name="dischageDate">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mx-auto">
+        <div class="row">
+          <div class="field-label col-md-6 mx-auto">
+            <label for="vitalSignsT" class="text-muted">vitalSignsT<span class="required-field">*</span></label>
+            <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.vitalSignsT" id="vitalSignsT"
+              name="vitalSignsT">
+          </div>
+
+          <div class="field-label col-md-6 mx-auto">
+            <label for="vitalSignsBP" class="text-muted">VitalSignsBP<span class="required-field">*</span></label>
+            <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.vitalSignsBP"
+              id="vitalSignsBP" name="vitalSignsBP">
+          </div>
+        </div>
+        <div class="row">
+          <div class="field-label col-md-6 mx-auto">
+            <label for="vitalSignsP" class="text-muted">VitalSignsP<span class="required-field">*</span></label>
+            <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.vitalSignsP" id="vitalSignsP"
+              name="vitalSignsP">
+          </div>
+
+          <div class="field-label col-md-6 mx-auto">
+            <label for="vitalSignsRP" class="text-muted">VitalSignsRP<span class="required-field">*</span></label>
+            <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.vitalSignsRP"
+              id="vitalSignsRP" name="vitalSignsRP">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row col-md-11 mx-auto">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="clinicalFinding" class="text-muted">Clinical Finding<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.clinicalFinding" id="clinicalFinding"
+          name="clinicalFinding">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="underlyingDiseases" class="text-muted">Underlying Diseases<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.underlyingDiseases"
+          id="underlyingDiseases" name="underlyingDiseases">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="illnesRelatedAddiction" class="text-muted">Illnes Related Addiction</label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.illnesRelatedAddiction"
+          id="illnesRelatedAddiction" name="illnesRelatedAddiction">
+      </div>
+    </div>
+
+    <div class="row">
+
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="patientPregnant" class="text-muted">Patient Pregnant<span class="required-field">*</span></label>
+        <div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="YES" [(ngModel)]="physicianReport.patientPregnant" name="patientPregnant">
+              YES</label>
+          </div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="NO" [(ngModel)]="physicianReport.patientPregnant" checked="checked" name="patientPregnant">
+              NO</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="gestationAge" class="text-muted">Gestation Age</label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.gestationAge" id="gestationAge"
+          name="gestationAge" maxlength=2 >
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="HIV" class="text-muted">HIV<span class="required-field">*</span></label>
+        <div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="YES" [(ngModel)]="physicianReport.HIV" name="HIV">
+              YES
+            </label>
+          </div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="NO" [(ngModel)]="physicianReport.HIV" checked="checked" name="HIV">
+              NO</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="HIVResult" class="text-muted">HIVResult</label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="physicianReport.HIVResult" id="HIVResult"
+          name="HIVResult">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group row">
+      <B>Illness</B>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="firstSight" class="text-muted">First Sight<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="illness.firstSight" id="firstSight"
+          name="firstSight">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="currentSymptoms" class="text-muted">Current Symptoms<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="illness.currentSymptoms" id="currentSymptoms"
+          name="currentSymptoms">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group row">
+      <B>Injury</B>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="injuryDate" class="text-muted">Injury Date<span class="required-field">*</span></label>
+        <input type="date" class="form-control border-bottom text-center" required [(ngModel)]="InjuryDate" id="injuryDate"
+          name="injuryDate">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="firstSight" class="text-muted">First Sight<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="injury.firstSight" id="firstSight"
+          name="firstSight">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="cause" class="text-muted">Cause<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="injury.cause" id="cause" name="cause">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="woundOrgans" class="text-muted">Wound Organs<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="injury.woundOrgans" id="woundOrgans"
+          name="woundOrgans">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="smellAlcohol" class="text-muted">Smell Alcohol<span class="required-field">*</span></label>
+        <div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="YES" [(ngModel)]="injury.smellAlcohol" name="smellAlcohol">
+              YES
+            </label>
+          </div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="NO" [(ngModel)]="injury.smellAlcohol" checked="checked" name="smellAlcohol">
+              NO</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="LVconsciousness" class="text-muted">LV Consciousness<span class="required-field">*</span></label>
+        <select class="form-control" required [(ngModel)]="injury.LVconsciousness" [name]="injury.LVconsciousness"
+          [ngModelOptions]="{standalone: true}">
+          <option value="ALERT">ALERT</option>
+          <option value="DROWSINESS">DROWSINESS</option>
+          <option value="STUPOROUS">STUPOROUS</option>
+          <option value="COMA" selected="selected">COMA</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="drugs" class="text-muted">Drugs<span class="required-field">*</span></label>
+
+        <div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="YES" [(ngModel)]="injury.drugs" name="drugs">
+              YES
+            </label>
+          </div>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" value="NO" [(ngModel)]="injury.drugs" checked="checked" name="drugs">
+              NO</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="nameTypeMedicine" class="text-muted">Name Type Medicine<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="injury.nameTypeMedicine" id="nameTypeMedicine"
+          name="nameTypeMedicine">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group row">
+      <B>Investigations</B>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="interview" class="text-muted">Interview<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="investigations.interview" id="interview"
+          name="interview">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="diagnosis" class="text-muted">Diagnosis<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="investigations.diagnosis" id="diagnosis"
+          name="diagnosis">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="ICD10" class="text-muted">ICD10<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="investigations.ICD10" id="ICD10"
+          name="ICD10">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="treatment" class="text-muted">Treatment<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="investigations.treatment" id="treatment"
+          name="treatment">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="surger" class="text-muted">Surger<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="investigations.surger" id="surger"
+          name="surger">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="result" class="text-muted">Result<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="investigations.result" id="result"
+          name="result">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group row">
+      <B>Receipt</B>
+    </div>
+
+    <div class="row">
+      <div class="field-label col-md-4 mx-auto">
+        <label for="receiptNo" class="text-muted">ReceiptNo<span class="required-field">*</span><span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom" required [(ngModel)]="receipt.receiptNo" id="receiptNo"
+          name="receiptNo">
+      </div>
+
+      <div class="field-label col-md-4 mx-auto">
+        <label for="remainingAmount" class="text-muted">Remaining Amount<span class="required-field">*</span></label>
+        <input type="text" class="form-control border-bottom text-center" required [(ngModel)]="model.remainingAmount"
+          id="remainingAmount" name="remainingAmount" readonly pattern="^([1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$">
+      </div>
+    </div>
+    <br>
+    <hr>
+    <div class="form-group row">
+      <B>Treatment<span class="required-field">*</span></B>
+    </div>
+    <div class="header-row row">
+
+      <div class="col-md-4">
+        Item
+      </div>
+      <div class="col-md-2">
+        Quantity
+      </div>
+      <div class="col-md-2">
+        Price
+      </div>
+      <div class="col-md-2">
+        Amount
+      </div>
+      <div class="col-md-1 btnAddReceiptTreatment">
+        <button type="button" class="btnView" (click)="addReceiptTreatment()"><span class="glyphicon glyphicon-plus"></span><span
+            class="textButton"> Add</span></button>
+      </div>
+    </div>
+
+    <div *ngFor="let treatment of receipt.treatment; let i=index" class="row impact">
+      <br>
+      <div class="col-md-4">
+        <input type="text" class="form-control border-bottom text-center" required [(ngModel)]="treatment.item" [name]="i+'item'">
+      </div>
+
+      <div class="col-md-2">
+        <input type="text" class="form-control border-bottom text-center" required [(ngModel)]="treatment.quantity"
+          [name]="i+'quantity'" (ngModelChange)="calculateReceipt(i)" name="quantity" pattern="^([1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$">
+      </div>
+
+      <div class="col-md-2">
+        <input type="text" class="form-control border-bottom text-center" required [(ngModel)]="treatment.price" [name]="i+'price'"
+          (ngModelChange)="calculateReceipt(i)" pattern="^([1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$">
+      </div>
+
+      <div class="col-md-2">
+        <input type="text" class="form-control border-bottom text-center" required [(ngModel)]="treatment.amount"
+          [name]="i + 'amount'" readonly pattern="^([1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$">
+      </div>
+      <div class="col-md-1">
+        <input type="image" class="deleteImpactBody" (click)="deleteReceiptTreatment(i)" src="assets/images/ic_delete_gray.png" />
+      </div>
+      <br>
+    </div>
+    <hr>
+    <br>
+
+    <div class="row">
+
+
+      <div class="field-label col-md-8 mx-auto">
+        <label for="comment" class="text-muted">Comment</label>
+        <textarea rows="4" cols="50" class="form-control border-bottom" [(ngModel)]="model.comment" id="comment" name="comment"></textarea>
+      </div>
+    </div>
+
+    <!-- ################################ -->
+    <br>
+
+    <div class="row">
+      <div class="center">
+        <button type="submit" class="w3-btn w3-grey w3-border w3-border-green w3-text-white w3-round-xlarge" style="text-shadow:1px 1px 0 #444">SUBMIT</button>
+      </div>
+    </div>
+
+    <div class="row" id='statusfield' style='display:none;'>
+      <div class="field-label col-md-12 mx-auto">
+        <label for="status" class="text-muted">Status</label>
+        <textarea rows="10" cols="100" style="border: none; background-color: white" class="form-control border-bottom"
+          readonly id="status" name="status"></textarea>
+      </div>
+    </div>
+  </form>
+</div>

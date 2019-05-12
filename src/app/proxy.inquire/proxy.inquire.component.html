@@ -1,0 +1,466 @@
+<div class="container">
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+    <div class="form-group row">
+      <H1>PROXY INQUIRE CCR DOCUMENT</H1>
+    </div>
+  
+    <div class="form-group row">
+      <B>Search CCR Document Form Blockchain on Private Channel</B>
+  
+    </div>
+    <div class="row">
+      <div class="field-label col-md-3 mx-auto">
+        <label for="citizenID" class="text-muted">Citizen ID</label>
+        <input type="text" class="form-control border-bottom" [(ngModel)]="model.citizenID" id="citizenID" name="citizenID" pattern="^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$">
+      </div>
+      <div class="field-label col-md-3 mx-auto">
+        <label for="receiptNo" class="text-muted">Receipt No</label>
+        <input type="text" class="form-control border-bottom" [(ngModel)]="model.receiptNo" id="receiptNo" name="receiptNo">
+      </div>
+    </div>
+    <div class="row">
+      <div class="center">
+        <button type="submit" class="w3-btn w3-grey w3-border w3-border-green w3-text-white w3-round-xlarge" style="text-shadow:1px 1px 0 #444"
+          (click)="onSubmit()">Search</button>
+      </div>
+  
+    </div>
+  
+    <hr>
+  </div>
+  <br>
+  
+  <div class="container" id="result" style='display:none;'>
+    <div class="row">
+  
+      <div class="center">
+        <div class="field-label col-md-12 mx-auto">
+          <label for="receiptNo" class="text-muted"><B>Dowload CCR DOCUMENT</B></label>
+        </div>
+  
+      </div>
+  
+    </div>
+    <div class="row">
+  
+      <div class="center">
+        <div class="col-md-12 mx-auto">
+          <button id="dowload" type="submit" class="w3-btn w3-grey w3-border w3-border-green w3-text-white w3-round-xlarge"
+            style="text-shadow:1px 1px 0 #444" (click)="dowloadPdf()">Dowload</button>
+        </div>
+      </div>
+  
+    </div>
+    <hr>
+    <h3> RESULT TABLE </h3>
+  
+  
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <h4>Patient Profile</h4>
+          <table class="table table-bordered">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>Citizen ID</th>
+                <th>Name</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let responseValue1 of responseValue">
+              <tr>
+                <td>{{ model.citizenID }}</td>
+                <td> Another onehere </td>
+                <td>{{ responseValue1.Patient.PatientType }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <H4>Certificate Medical</H4>
+          <table class="table table-bordered">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>Create Date</th>
+                <th>State</th>
+                <th>Medical Specialty</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let responseValue1 of responseValue">
+              <tr>
+                <td>{{ responseValue1.CreateDate }}</td>
+                <td>{{ responseValue1.State }}</td>
+                <td>{{ responseValue1.Physician.MedicalSpecialty }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <H4>Physician Report</H4>
+          <table class="table table-bordered">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>Admission Date</th>
+                <th>Vital Signs</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let responseValue1 of responseValue">
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.AdmissionDate }}</td>
+                <td rowspan="3">
+                  <ul>
+                    <li>VitalSigns T : {{ responseValue1.PhysicianReport.VitalSignsT}}
+                    <li>VitalSigns BP : {{ responseValue1.PhysicianReport.VitalSignsBP}}
+                    <li>VitalSigns P : {{ responseValue1.PhysicianReport.VitalSignsP}}
+                    <li>VitalSigns RP : {{ responseValue1.PhysicianReport.VitalSignsRP}}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td bgcolor="#262626" style="color: #fff;"><B>Dischage Date</B></td>
+              </tr>
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.DischageDate }}</td>
+              </tr>
+              <tr bgcolor="#262626" style="color: #fff;">
+                <td><B>Clinical Finding</B></td>
+                <td><B>Underlying Diseases</B></td>
+              </tr>
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.ClinicalFinding }}</td>
+                <td>{{ responseValue1.PhysicianReport.UnderlyingDiseases }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <table class="table table-bordered">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>Illnes Related Addiction</th>
+                <th>Patient Pregnant</th>
+                <th>Gestation Age</th>
+                <th>HIV</th>
+                <th>HIV Result</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let responseValue1 of responseValue">
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.IllnesRelatedAddiction }}</td>
+                <td>{{ responseValue1.PhysicianReport.PatientPregnant }}</td>
+                <td>{{ responseValue1.PhysicianReport.GestationAge }}</td>
+                <td>{{ responseValue1.PhysicianReport.HIV }}</td>
+                <td>{{ responseValue1.PhysicianReport.HIVResult }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <H4>Illness</H4>
+          <table class="table table-bordered">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>First Sight</th>
+                <th>Current Symptoms</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let responseValue1 of responseValue">
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.Illness.FirstSight }}</td>
+                <td>{{ responseValue1.PhysicianReport.Illness.CurrentSymptoms }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <H4>Injury</H4>
+          <table class="table table-bordered">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>InjuryDate</th>
+                <th>FirstSight</th>
+                <th>Cause</th>
+                <th>WoundOrgans</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let responseValue1 of responseValue">
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.Injury.InjuryDate }}</td>
+                <td>{{ responseValue1.PhysicianReport.Injury.FirstSight }}</td>
+                <td>{{ responseValue1.PhysicianReport.Injury.Cause }}</td>
+                <td>{{ responseValue1.PhysicianReport.Injury.WoundOrgans }}</td>
+              </tr>
+              <tr bgcolor="#262626" style="color: #fff;">
+                <td><B>Smell Alcohol</B></td>
+                <td><B>LV consciousness</B></td>
+                <td><B>Drugs</B></td>
+                <td><B>Name Type Medicine</B></td>
+              </tr>
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.Injury.SmellAlcohol }}</td>
+                <td>{{ responseValue1.PhysicianReport.Injury.LVconsciousness }}</td>
+                <td>{{ responseValue1.PhysicianReport.Injury.Drugs }}</td>
+                <td>{{ responseValue1.PhysicianReport.Injury.NameTypeMedicine }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <H4>Investigations</H4>
+          <table class="table table-bordered">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>Interview</th>
+                <th>Diagnosis</th>
+                <th>ICD10</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let responseValue1 of responseValue">
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.Investigations.Interview }}</td>
+                <td>{{ responseValue1.PhysicianReport.Investigations.Diagnosis }}</td>
+                <td>{{ responseValue1.PhysicianReport.Investigations.ICD10 }}</td>
+              </tr>
+              <tr bgcolor="#262626" style="color: #fff;">
+                <td><B>Treatment</B></td>
+                <td><B>Surger</B></td>
+                <td><B>Result</B></td>
+              </tr>
+              <tr>
+                <td>{{ responseValue1.PhysicianReport.Investigations.Treatment }}</td>
+                <td>{{ responseValue1.PhysicianReport.Investigations.Surger }}</td>
+                <td>{{ responseValue1.PhysicianReport.Investigations.Result }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <table class="table table-borderless">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>Comment</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let responseValue1 of responseValue">
+              <tr>
+                <td>{{ responseValue1.Comment }}</td>
+              </tr>
+  
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <div class="container">
+      <div class="col-md-12 mx-auto">
+        <div class="row">
+          <H4>Receipt</H4>
+          <table class="table table-bordered">
+            <thead bgcolor="#262626" style="color: #fff;">
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let responseValue1 of responseValueItem">
+                <td>{{ responseValue1.Item }}</td>
+                <td>{{ responseValue1.Quantity }}</td>
+                <td>{{ responseValue1.Price }} THB</td>
+                <td>{{ responseValue1.Amount }} THB</td>
+              </tr>
+              <tr *ngFor="let responseValue2 of responseValue" bgcolor="#e6e6e6">
+                <td colspan="4" align="right"><B>Total : {{ responseValue2.Receipt.total }} THB</B></td>
+              <tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <h3> RESULT LIST </h3>
+  
+    <ul class="list-group ">
+      <li class="list-group-item active" style="background-color: coral; border: coral; ">CCR DOCUMENT</li>
+      <li class="list-group-item text-concat" *ngFor="let responseValue1 of responseValue">
+  
+        <font class="font">Document Identity : <br></font>{{ responseValue1.DocumentIdentity }}
+        <br>
+        <font class="font">CreateDate : </font>{{ responseValue1.CreateDate }}
+        <br>
+        <font class="font">State : </font>{{ responseValue1.State }}
+        <br>
+        <font class="font">Receipt Amount : </font>{{ responseValue1.ReceiptAmount }} THB
+        <br>
+        <font class="font">Remaining Amount : </font>{{ responseValue1.RemainingAmount }} THB
+        <br>
+        <font class="font">Comment : </font>{{ responseValue1.Comment }}
+        <br>
+        <font class="font">RequestIdentity :</font>
+        <br> {{ responseValue1.RequestIdentity }}
+      </li>
+    </ul>
+  
+    <hr>
+  
+    <ul class="list-group ">
+      <li class="list-group-item active" style="background-color: rgb(250, 230, 46); border: rgb(250, 230, 46); ">Physician
+        Report</li>
+      <li class="list-group-item text-concat" *ngFor="let responseValue1 of responseValue">
+  
+        <font class="font">Patient Type : </font>{{ responseValue1.Patient.PatientType }}
+        <br>
+        <font class="font">Medical Specialty : </font>{{ responseValue1.Physician.MedicalSpecialty }}
+        <br>
+        <font class="font">Admission Date : </font>{{ responseValue1.PhysicianReport.AdmissionDate }}
+        <br>
+        <font class="font">Dischage Date : </font>{{ responseValue1.PhysicianReport.DischageDate }}
+        <br>
+        <font class="font">VitalSigns T : </font>{{ responseValue1.PhysicianReport.VitalSignsT }}
+        <br>
+        <font class="font">VitalSigns BP : </font>{{ responseValue1.PhysicianReport.VitalSignsBP }}
+        <br>
+        <font class="font">VitalSigns P : </font>{{ responseValue1.PhysicianReport.VitalSignsP }}
+        <br>
+        <font class="font">VitalSigns RP : </font>{{ responseValue1.PhysicianReport.VitalSignsRP }}
+        <br>
+        <font class="font">Clinical Finding : </font>{{ responseValue1.PhysicianReport.ClinicalFinding }}
+        <br>
+        <font class="font">Underlying Diseases : </font>{{ responseValue1.PhysicianReport.UnderlyingDiseases }}
+        <br>
+        <font class="font">Illnes Related Addiction : </font>{{ responseValue1.PhysicianReport.IllnesRelatedAddiction }}
+        <br>
+        <font class="font">Patient Pregnant : </font>{{ responseValue1.PhysicianReport.PatientPregnant }}
+        <br>
+        <font class="font">Gestation Age : </font>{{ responseValue1.PhysicianReport.GestationAge }}
+        <br>
+        <font class="font">HIV : </font>{{ responseValue1.PhysicianReport.HIV }}
+        <br>
+        <font class="font">HIVResult : </font>{{ responseValue1.PhysicianReport.HIVResult }}
+        <br>
+      </li>
+    </ul>
+  
+    <hr>
+  
+    <ul class="list-group ">
+      <li class="list-group-item active" style="background-color: rgb(166, 255, 23); border: rgb(166, 255, 23); ">Illness</li>
+      <li class="list-group-item text-concat" *ngFor="let responseValue1 of responseValue">
+  
+        <font class="font">First Sight : </font>{{ responseValue1.PhysicianReport.Illness.FirstSight }}
+        <br>
+        <font class="font">Current Symptoms : </font>{{ responseValue1.PhysicianReport.Illness.CurrentSymptoms }}
+        <br>
+      </li>
+    </ul>
+  
+    <hr>
+  
+    <ul class="list-group ">
+      <li class="list-group-item active" style="background-color: rgb(23, 255, 112); border: rgb(23, 255, 112); ">Injury</li>
+      <li class="list-group-item text-concat" *ngFor="let responseValue1 of responseValue">
+        <font class="font">Injury Date : </font>{{ responseValue1.PhysicianReport.Injury.InjuryDate }}
+        <br>
+        <font class="font">First Sight : </font>{{ responseValue1.PhysicianReport.Injury.FirstSight }}
+        <br>
+        <font class="font">Cause : </font>{{ responseValue1.PhysicianReport.Injury.Cause }}
+        <br>
+        <font class="font">Wound Organs : </font>{{ responseValue1.PhysicianReport.Injury.WoundOrgans }}
+        <br>
+        <font class="font">Smell Alcohol : </font>{{ responseValue1.PhysicianReport.Injury.SmellAlcohol }}
+        <br>
+        <font class="font">LV consciousness : </font>{{ responseValue1.PhysicianReport.Injury.LVconsciousness }}
+        <br>
+        <font class="font">Drugs : </font>{{ responseValue1.PhysicianReport.Injury.Drugs }}
+        <br>
+        <font class="font">Name Type Medicine : </font>{{ responseValue1.PhysicianReport.Injury.NameTypeMedicine }}
+        <br>
+      </li>
+    </ul>
+  
+    <hr>
+  
+    <ul class="list-group ">
+      <li class="list-group-item active" style="background-color: rgb(21, 203, 235); border: rgb(21, 203, 235); ">Investigations</li>
+      <li class="list-group-item text-concat" *ngFor="let responseValue1 of responseValue">
+        <font class="font">Interview : </font>{{ responseValue1.PhysicianReport.Investigations.Interview }}
+        <br>
+        <font class="font">Diagnosis : </font>{{ responseValue1.PhysicianReport.Investigations.Diagnosis }}
+        <br>
+        <font class="font">ICD10 : </font>{{ responseValue1.PhysicianReport.Investigations.ICD10 }}
+        <br>
+        <font class="font">Treatment : </font>{{ responseValue1.PhysicianReport.Investigations.Treatment }}
+        <br>
+        <font class="font">Surger : </font>{{ responseValue1.PhysicianReport.Investigations.Surger }}
+        <br>
+        <font class="font">Result : </font>{{ responseValue1.PhysicianReport.Investigations.Result }}
+        <br>
+      </li>
+    </ul>
+  
+    <hr>
+  
+    <ul class="list-group ">
+      <li class="list-group-item active" style="background-color: rgb(122, 40, 255); border: rgb(122, 40, 255); ">Treatment</li>
+      <li class="list-group-item text-concat" *ngFor="let responseValue1 of responseValue">
+        <font class="font">Interview : </font>{{ responseValue1.PhysicianReport.Investigations.Interview }}
+        <br>
+        <font class="font">Diagnosis : </font>{{ responseValue1.PhysicianReport.Investigations.Diagnosis }}
+        <br>
+        <font class="font">ICD10 : </font>{{ responseValue1.PhysicianReport.Investigations.ICD10 }}
+        <br>
+        <font class="font">Treatment : </font>{{ responseValue1.PhysicianReport.Investigations.Treatment }}
+        <br>
+        <font class="font">Surger : </font>{{ responseValue1.PhysicianReport.Investigations.Surger }}
+        <br>
+        <font class="font">Result : </font>{{ responseValue1.PhysicianReport.Investigations.Result }}
+        <br>
+      </li>
+    </ul>
+    <br>
+  
+    <hr>
+  </div>
+  
+  <div class="container" id="error" style='display:none;'>
+  
+    <h3> ERROR </h3>
+    <div class="row">
+      <label for="erMass" class="col-2 col-form-label text-right font-weight-bold">
+        Massage
+      </label>
+      <div class="col-12">
+        <textarea rows="10" cols="100" style="border: none; background-color: white" class="form-control border-bottom"
+          readonly id="status" name="status"></textarea>
+      </div>
+    </div>
+  </div>
