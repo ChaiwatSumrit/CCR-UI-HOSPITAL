@@ -18,7 +18,7 @@ export class ProxyCcrDocumentService {
     createAuthorizationHeader(headers: Headers) {
 
         headers.append('Content-Type', 'application/json');
-        headers.append('x-krungsri-api-token', localStorage.getItem('token'));
+        headers.append('x-bestedit-api-token', localStorage.getItem('token'));
         
     }
 

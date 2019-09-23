@@ -112,7 +112,7 @@ export class FieldsPatient {
   static empty(): FieldsPatient {
     //   return empty(FieldsPatient, 3);
     const emptyObj = empty(FieldsPatient, 3);
-    emptyObj['$class'] = 'com.krungsri.rpt.FieldsPatient';
+    emptyObj['$class'] = 'com.bestedit.rpt.FieldsPatient';
     return emptyObj;
   }
 
@@ -560,7 +560,7 @@ export class InquireCcrDocumentByKeyFields {
 //   static empty(): FieldsPatient {
 //     //   return empty(FieldsPatient, 3);
 //     const emptyObj = empty(FieldsPatient, 3);
-//     emptyObj['$class'] = 'com.krungsri.rpt.FieldsPatient';
+//     emptyObj['$class'] = 'com.bestedit.rpt.FieldsPatient';
 //     return emptyObj;
 //   }
 
